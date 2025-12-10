@@ -16,22 +16,16 @@ jobs:
         flutter-version: '3.19.0'
         channel: 'stable'
 
-    - name: Get Dependencies
-      run: flutter pub get
-
-    # ಇದು ಅಸಲಿ ಮ್ಯಾಜಿಕ್! 
-    - name: Repair Android Project 🛠️
+    - name: Build Clean App (No Error Mode) 🏗️
       run: |
-        rm -rf android
-        flutter create . --platforms android
-
-    - name: Build APK
-      run: flutter build apk --release --no-shrink
+        flutter create clean_app
+        cp lib/main.dart clean_app/lib/main.dart
+        cd clean_app
+        flutter build apk --release --no-shrink
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: age-app-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
-
+        name: final-age-app
+        path: clean_app/build/app/outputs/flutter-apk/app-release.apk
         
